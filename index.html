@@ -1,0 +1,512 @@
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <title>Gráficos com Google Charts</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Função que carrega a API e pacotes (o pacote inicial "mínimo" é o corechart package)
+      google.charts.load('current', {'packages':['corechart', 'line', 'scatter', 
+        'bar', 'table', 'gauge', 'controls']});
+
+      // Função que desenha o gráfico de pizza quando Charts é carregada
+      google.charts.setOnLoadCallback(desenharGraficoPizza);
+      // Função que desenha o gráfico de donut quando Charts é carregada
+      google.charts.setOnLoadCallback(desenharGraficoDonut);
+      google.charts.setOnLoadCallback(desenharScatterInvestimento);
+      google.charts.setOnLoadCallback(desenharLinhaInvestimento);
+      google.charts.setOnLoadCallback(desenharScatterGastos);
+      google.charts.setOnLoadCallback(desenharColunasEntradaSaida);
+      google.charts.setOnLoadCallback(desenharLinhaPercentualGasto);
+      google.charts.setOnLoadCallback(drawChartRangeFilter);
+      google.charts.setOnLoadCallback(drawSeriesChart);
+      google.charts.setOnLoadCallback(drawStackedChart);
+      google.charts.setOnLoadCallback(drawPercStackedChart);
+      google.charts.setOnLoadCallback(drawTypeColumnChart);
+
+      function desenharLinhaInvestimento() {
+         var data = google.visualization.arrayToDataTable([
+          ['Mês','Investimentos'],
+          [ 'Jan', 800 ],
+          [ 'Fev', 400 ],
+          [ 'Mar', 1100],
+          [ 'Abr', 400 ],
+          [ 'Mai', 500 ],
+          [ 'Jun', 750 ],
+          [ 'Jul', 1500 ],
+          [ 'Ago', 650 ],
+          [ 'Set', 850 ],
+          [ 'Out', 400 ],
+          [ 'Nov', 1000 ],
+          [ 'Dez', 720 ]
+        ]);
+
+        var options = {
+          title: 'Investimentos por mês com LineChart',
+          vAxis: {format: 'currency'},
+          legend: 'none',
+          width: 650,
+          height: 300
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('desenharLinhaInvestimento_div'));
+        chart.draw(data, options);
+      }
+
+
+      function desenharScatterInvestimento() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mês', 'Investimentos'],
+          [ '1', 800 ],
+          [ '2', 400 ],
+          [ '3', 1100 ],
+          [ '4', 400 ],
+          [ '5', 500 ],
+          [ '6', 750 ],
+          [ '7', 1500 ],
+          [ '8', 650 ],
+          [ '9', 850 ],
+          [ '10', 400 ],
+          [ '11', 1000 ],
+          [ '12', 720 ]
+        ]);
+
+        var options = {
+          title: 'Investimentos por mês com ScatterChart',
+          //vAxis: {title: 'Investimentos', minValue: 900, maxValue: 6, format: 'currency'},//arrumar min max values, não funciona
+          //GOOGLE MUDOU API, PARA FUNCIONAR, USAR ABAIXO:
+          vAxis: {
+            title: 'Investimentos',
+            format: 'currency',
+            viewWindowMode:'explicit',
+            viewWindow: {
+              max:1600,
+              min:200
+            }
+          },
+          hAxis: {title: 'Mês', minValue: 0, maxValue: 5},//arrumar min e max values, não funciona
+          legend: 'none',
+          width:600,
+          height:300
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('desenharScatterInvestimento_div'));
+        chart.draw(data, options);
+      }
+
+
+      // Callback that draws the pie chart.
+      function desenharGraficoPizza() {
+
+        // Create the data table for the pie chart.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'tipo-de-gasto');
+        data.addColumn('number', 'valor');
+        data.addRows([
+          ['Faculdade', 2500.00],
+          ['Transporte', 450.00],
+          ['Lazer', 100.00],
+          ['Internet', 50.0],
+          ['Cartão de crédito', 2000.00],
+          ['Alimentação', 400.00]
+        ]);
+
+        // Set options for the pie chart.
+        var options = {title:'Tipos de gastos usando PieChart',
+                       width:400,
+                       height:300};
+
+        // Instantiate and draw the pie chart.
+        var chart = new google.visualization.PieChart(document.getElementById('grafico_pizza_div'));
+        chart.draw(data, options);
+      }
+
+
+      // Callback that draws the donut chart.
+      function desenharGraficoDonut() {
+
+        // Create the data table for the donut chart.
+        var data = google.visualization.arrayToDataTable([
+          ['Area', 'Gasto'],
+          ['Faculdade', 2500.00],
+          ['Transporte', 450.00],
+          ['Lazer', 100.00],
+          ['Internet', 50.0],
+          ['Cartão de crédito', 2000.00],
+          ['Alimentação', 400.00]
+        ]);
+
+        // Set options for the donut chart.
+        var options = {
+          title:'Tipos de gastos usando DonutChart',
+          pieHole: 0.4,
+          width:400,
+          height:300
+        };
+
+        // Instantiate and draw the donut chart.
+        var chart = new google.visualization.PieChart(document.getElementById('grafico_donut_div'));
+        chart.draw(data, options);
+      }
+
+       //gastos versao scatter 
+      function desenharScatterGastos() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Mês');
+        data.addColumn('number', 'Gastos');
+        //data.addColumn('string', 'Área'); //ver como colocar tipo aqui
+
+        data.addRows([
+          [1, 67], [1, 88], [1, 77],
+          [2, 93], [2, 85], [2, 91],
+          [3, 71], [3, 78], [3, 93],
+          [4, 80], [4, 82],[4, 75],
+          [5, 80], [5, 90], [5, 72],
+          [6, 75], [6, 68], [6, 98],
+          [7, 82], [7, 94], [7, 79],
+          [8, 95], [8, 86], [8, 67],
+          [9, 60], [9, 80], [9, 92],
+          [10, 81], [10, 79], [10, 83],
+          [11, 75], [11, 80], [11, 71],
+          [12, 89], [12, 92], [12, 85]
+        ]);
+
+
+        var options = {
+          width: 700,
+          height: 400,
+          title: 'Tipos de gastos usando ScatterChart',
+          hAxis: {title: 'Mês', format: 'decimal', 
+                  gridlines: {
+                      units: {
+                        months: {format: ['Mon']},
+                        }
+                      },
+                  viewWindowMode:'explicit',
+                    viewWindow: {
+                      max:12,
+                      min:1
+                      }
+                    },
+          vAxis: {title: 'Gastos', format: 'currency'}
+        };
+
+      
+        var chart = new google.visualization.ScatterChart(document.getElementById('desenharScatterGastos_div'));
+        chart.draw(data, options);
+      }
+
+        //grafico de colunas de entradas e saida da conta
+      function desenharColunasEntradaSaida() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Mês');
+        data.addColumn('number', 'Entradas');
+        data.addColumn('number', 'Saídas');
+
+        data.addRows([
+          ['Jan', 2500, 1000],
+          ['Fev', 2000, 500],
+          ['Mar', 3000, 1300],
+          ['Abr', 1500, 1700],
+          ['Mai', 5000, 2250],
+          ['Jun', 3567, 3000],
+          ['Jul', 3452, 1468],
+          ['Ago', 1833, 5250],
+          ['Set', 3803, 5500],
+          ['Out', 1800, 1000],
+          ['Nov', 3569, 1500],
+          ['Dez', 3000, 1740],
+        ]);
+
+        var options = {
+          title: 'Entradas e saídas mensais com ColumnChart',
+          hAxis: {
+            title: 'Mês',
+          },
+          vAxis: {
+            title: 'Valor',
+            format: 'currency'
+          },
+          width: 800,
+          height: 400,
+        };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('desenharColunasEntradaSaida_div'));
+      chart.draw(data, options);
+    }
+
+
+      function desenharLinhaPercentualGasto() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Mês');
+        data.addColumn('number', 'Percentual de gasto');
+        data.addRows([
+          [ new Date(2017, 0), 0.08 ],
+          [ new Date(2017, 1), 0.04 ],
+          [ new Date(2017, 2), 0.10],
+          [ new Date(2017, 3), 0.0402 ],
+          [ new Date(2017, 4), 0.0503 ],
+          [ new Date(2017, 5), 0.0705 ],
+          [ new Date(2017, 6), 0.105 ],
+          [ new Date(2017, 7), 0.0605 ],
+          [ new Date(2017, 8), 0.0805 ],
+          [ new Date(2017, 9), 0.104 ],
+          [ new Date(2017, 10), 0.105 ],
+          [ new Date(2017, 11), 0.0702 ]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Percentual de gastos por mês com LineChart',
+            subtitle: 'usando material charts nesse gráfico'
+            },
+            vAxis: {format:'percent'},
+            hAxis: {
+              //depois achar um jeito de exibir todos os meses
+            },
+          width: 800,
+          height: 400
+        };
+
+      var chart = new google.charts.Line(document.getElementById('desenharLinhaPercentualGasto_div'));
+      chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+
+
+//CHART RANGE
+     function drawChartRangeFilter() {
+
+    var control = new google.visualization.ControlWrapper({
+      'controlType': 'ChartRangeFilter',
+      'containerId': 'chartRangeFilter_control_div',
+      'options': {
+        // Filter by the date axis.
+        'filterColumnIndex': 0,
+        'ui': {
+          'chartType': 'LineChart',
+          'chartOptions': {
+            'chartArea': {'width': '90%'},
+            'hAxis': {'baselineColor': 'none'}
+          },
+          // Display a single series that shows the closing value of the stock.
+          // Thus, this view has two columns: the date (axis) and the stock value (line series).
+          'chartView': {
+            'columns': [0, 3]
+          },
+          // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+          'minRangeSize': 86400000
+        }
+      },
+      // Initial range: 2012-02-09 to 2012-03-20.
+      'state': {'range': {'start': new Date(2012, 1, 9), 'end': new Date(2012, 2, 20)}}
+    });
+
+    var chart = new google.visualization.ChartWrapper({
+      'chartType': 'ColumnChart',
+      'containerId': 'chartRangeFilter_chart_div',
+      'options': {
+        // Use the same chart area width as the control for axis alignment.
+        'chartArea': {'height': '80%', 'width': '90%'},
+        'hAxis': {'slantedText': false},
+        'vAxis': {'viewWindow': {'min': 0, 'max': 2000}},
+        'legend': {'position': 'none'},
+        'title': 'Selecionar o mês para ver o balanço (precisa ainda ser melhorado)',
+      },
+      // Convert the first column from 'date' to 'string'.
+      'view': {
+        'columns': [
+          {
+            'calc': function(dataTable, rowIndex) {
+              return dataTable.getFormattedValue(rowIndex, 0);
+            },
+            'type': 'string'
+          }, 1, 2, 3, 4]
+      }
+    });
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'Saídas');
+    data.addColumn('number', 'Entradas');
+    data.addColumn('number', 'Baixa');
+    data.addColumn('number', 'Crescimento');
+
+    // Create random stock values, just like it works in reality.
+    var open, close = 300;
+    var low, high;
+    for (var day = 1; day < 121; ++day) {
+      var change = (Math.sin(day / 2.5 + Math.PI) + Math.sin(day / 3) - Math.cos(day * 0.7)) * 150;
+      change = change >= 0 ? change + 10 : change - 10;
+      open = close;
+      close = Math.max(50, open + change);
+      low = Math.min(open, close) - (Math.cos(day * 1.7) + 1) * 15;
+      low = Math.max(0, low);
+      high = Math.max(open, close) + (Math.cos(day * 1.3) + 1) * 15;
+      var date = new Date(2012, 0 ,day);
+      data.addRow([date, Math.round(low), Math.round(open), Math.round(close), Math.round(high)]);
+    }
+
+    var dashboard = new google.visualization.Dashboard(
+      document.getElementById('chartRangeFilter_dashboard_div'));
+    dashboard.bind(control, chart);
+    dashboard.draw(data);
+  }
+
+//bubble chart
+    function drawSeriesChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Mês',   'Valor',       'Rendimento',      'Population'],
+        ['Jan',    80.66,              1.67,          34646463],
+        ['Fev',    79.84,              1.36,          81902307],
+        ['Mar',    78.6,               1.84,           5523095],
+        ['Abr',    72.73,              2.78,          79716203],
+        ['Mai',    80.05,              2,             61801570],
+        ['Jun',    72.49,              1.7,           73137148],
+        ['Jul',    68.09,              4.77,          31090763],
+        ['Ago',    81.55,              2.96,           7485600],
+        ['Set',    68.6,               1.54,         141850000],
+        ['Out',    78.09,              2.05,         307007000],
+        ['Nov',    78.09,              2.05,         307007000],
+        ['Dez',    78.09,              2.05,         307007000]
+      ]);
+
+      var options = {
+        title: 'Correlação entre mês, rendimento ' +
+               'valor investido (2017)',
+        hAxis: {title: 'Valor investido'},
+        vAxis: {title: 'Percentual de crescimento'},
+        bubble: {textStyle: {fontSize: 11}}
+      };
+
+      var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+      chart.draw(data, options);
+    }
+
+//stacked columns
+    function drawStackedChart(){
+        var data = google.visualization.arrayToDataTable([
+        ['Faculdade', 'Transporte', 'Lazer', 'Internet', 'Cartão de crédito',
+         'Alimentação', { role: 'annotation' } ],
+        ['2014', 10, 24, 20, 32, 18, ''],
+        ['2015', 16, 22, 23, 30, 16, ''],
+        ['2016', 28, 19, 29, 30, 12, ''],
+        ['2017', 28, 19, 29, 30, 12, '']
+      ]);
+
+      var view = new google.visualization.DataView(data);
+       
+
+       var options = {
+          isStacked: true,
+          height: 300,
+          legend: {position: 'right', maxLines: 3},
+          vAxis: {
+            minValue: 0,
+          },
+          title: 'ColumnChart de gastos sem as colunas darem 100% (serem full stacked)'
+        };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById("drawStackedChart_div"));
+      chart.draw(view, options);
+
+    }
+
+
+//full stacked columns
+    function drawPercStackedChart(){
+        var data = google.visualization.arrayToDataTable([
+        ['Faculdade', 'Transporte', 'Lazer', 'Internet', 'Cartão de crédito',
+         'Alimentação', { role: 'annotation' } ],
+        ['2014', 10, 24, 20, 32, 18, ''],
+        ['2015', 16, 22, 23, 30, 16, ''],
+        ['2016', 28, 19, 29, 30, 12, ''],
+        ['2017', 28, 19, 29, 30, 12, '']
+      ]);
+
+    
+      var view = new google.visualization.DataView(data);
+
+       var options = {
+          isStacked: 'percent',
+          height: 300,
+          legend: {position: 'right', maxLines: 3},
+          vAxis: {
+            minValue: 0,
+          },
+          title: 'ColumnChart de gastos com as colunas dando 100% (full stacked)'
+        };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById("drawPercStackedChart_div"));
+      chart.draw(view, options);
+
+    }
+
+//mesmo grafico em colunas
+    function drawTypeColumnChart(){
+        var data = google.visualization.arrayToDataTable([
+        ['Faculdade', 'Transporte', 'Lazer', 'Internet', 'Cartão de crédito',
+         'Alimentação', { role: 'annotation' } ],
+        ['2014', 10, 24, 20, 32, 18, ''],
+        ['2015', 16, 22, 23, 30, 16, ''],
+        ['2016', 28, 19, 29, 30, 12, ''],
+        ['2017', 28, 19, 29, 30, 12, '']
+      ]);
+
+        
+      var view = new google.visualization.DataView(data);
+
+       var options = {
+          height: 300,
+          legend: {position: 'right', maxLines: 3},
+          vAxis: {
+            minValue: 0,
+          },
+          title: 'ColumnChart de tipos de gastos'
+        };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById("drawTypeColumnChart_div"));
+      chart.draw(view, options);
+
+    }
+
+
+    </script>
+  </head>
+  <body>
+    <h1>Gráficos com Google Charts</h1>
+   
+    <div id="desenharLinhaInvestimento_div" style="border: 1px solid #ccc; display: inline-block"></div>
+    <div id="desenharScatterInvestimento_div" style="border: 1px solid #ccc; display: inline-block"></div>
+    <div id="grafico_pizza_div" style="border: 1px solid #ccc; display: inline-block"></div>
+    <div id="grafico_donut_div" style="border: 1px solid #ccc; display: inline-block"></div>
+    <div id="desenharScatterGastos_div" style="border: 1px solid #ccc; display: inline-block"></div>
+    <div id="desenharColunasEntradaSaida_div" style="border: 1px solid #ccc; display: inline-block"></div>
+    <div id="desenharLinhaPercentualGasto_div" style="border: 1px solid #ccc; display: inline-block; padding:20px"></div>
+ 
+    <div id="chartRangeFilter_dashboard_div" style="border: 1px solid #ccc; width: 950px; display: inline-block;">
+      <table class="columns">
+        <tr>
+          <td>
+            <div id="chartRangeFilter_chart_div" style="width: 915px; height: 300px; padding: 20px;"></div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="chartRangeFilter_control_div" style="width: 915px; height: 50px; "></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="series_chart_div" style="width: 900px; height: 500px;border: 1px solid #ccc; display: inline-block;"></div>
+    
+    <div id="drawStackedChart_div" style="border: 1px solid #ccc; width: 650px; height: 300px; display: inline-block;"></div>
+
+    <div id="drawPercStackedChart_div" style="border: 1px solid #ccc; width: 650px; height: 300px; display: inline-block;"></div>
+
+    <div id="drawTypeColumnChart_div" style="border: 1px solid #ccc; width: 650px; height: 300px; display: inline-block;"></div>
+    
+
+  </body>
+</html>
