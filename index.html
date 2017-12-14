@@ -4,12 +4,14 @@
     <title>Gráficos com Google Charts</title>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script type="text/javascript" src="js/pizza.js"></script>
     <script type="text/javascript" src="js/donut.js"></script>
     <script type="text/javascript" src="js/scatter.js"></script>
     <script type="text/javascript" src="js/linha.js"></script>
     <script type="text/javascript" src="js/scatter-gastos.js"></script>
     <script type="text/javascript" src="js/colunas.js"></script>
+    <script type="text/javascript" src="js/coluna-alura.js"></script>
     <script type="text/javascript" src="js/linha-percentual.js"></script>
     <script type="text/javascript" src="js/filtro.js"></script>
     <script type="text/javascript" src="js/series.js"></script>
@@ -23,13 +25,25 @@
     <script type="text/javascript" src="js/series-alura-prop.js"></script>
     <script type="text/javascript" src="js/series-netflix.js"></script>
     <script type="text/javascript" src="js/pizza-alura.js"></script>
+    <script type="text/javascript" src="js/pizza-3d-alura.js"></script>
     <script type="text/javascript" src="js/area-full-stacked.js"></script>
-     <script type="text/javascript" src="js/piramide.js"></script>
-
+    <script type="text/javascript" src="js/piramide.js"></script>
+    <script type="text/javascript" src="js/linha-filmes.js"></script>
+    <script type="text/javascript" src="js/linha-curva.js"></script>
+    <script type="text/javascript" src="js/linha-filmes-2.js"></script>
+    <script type="text/javascript" src="js/linha-lancados-1.js"></script>
+    <script type="text/javascript" src="js/linha-lancados-2.js"></script>
+    <script type="text/javascript" src="js/linha-assistidos-1.js"></script>
+    <script type="text/javascript" src="js/linha-assistidos-2.js"></script>
+    <script type="text/javascript" src="js/linha-eixo-duplo.js"></script>
+    <script type="text/javascript" src="js/area-gastos.js"></script>
+    <script type="text/javascript" src="js/area-gastos-stacked.js"></script>
+    <script type="text/javascript" src="js/area-ling-prog.js"></script>  
+    
   </head>
 
   <body style="font-family: Arial, Helvetica, sans-serif;">
-    <h1 style="text-align: center;">21 Gráficos com Google Charts</h1>
+    <h1 style="text-align: center;">34 Gráficos com Google Charts</h1>
   
     <div style="padding:15px;">
       <h2>Mesmo dado em scatter e line</h2>
@@ -38,11 +52,13 @@
     </div>
 
     <div style="padding:15px;">
-      <h2>Gráfico de pizza e donut funciona sqn</h2>
+      <h2>Gráfico de pizza e donut funcionam sqn</h2>
       <div id="grafico_pizza_div" style="border: 1px solid #ccc; display: inline-block"></div>
       <div id="grafico_donut_div" style="border: 1px solid #ccc; display: inline-block"></div>
+      <div id="pizza_3d_alura_div" style="border: 1px solid #ccc; display: inline-block"></div>
       <h3>Apenas talvez se</h3>
       <div id="pizza_alura_div" style="border: 1px solid #ccc; display: inline-block"></div>
+      <div id="desenharCursosAlura_div" style="border: 1px solid #ccc; display: inline-block"></div>
     </div>
 
     <div style="padding:15px;">
@@ -89,8 +105,14 @@
       <div id="drawPercStackedChart_div" style="border: 1px solid #ccc; width: 650px; height: 300px; display: inline-block;"></div>
 
       <div id="drawTypeColumnChart_div" style="border: 1px solid #ccc; width: 650px; height: 300px; display: inline-block;"></div>
-    </div>
 
+      <div id="area_gastos" style="border: 1px solid #ccc; display: inline-block"></div>
+      
+      <div id="area_gastos_stacked" style="border: 1px solid #ccc; display: inline-block"></div>   
+
+      <div id="area_ling_prog" style="border: 1px solid #ccc; display: inline-block"></div>   
+
+    </div>  
 
     <div id="trend_chart_div" style="border: 1px solid #ccc; width: 650px; height: 300px; display: inline-block;"></div>
 
@@ -106,6 +128,23 @@
       <h2>Pirâmide</h2>
       <div id="piramide_div" style="border: 1px solid #ccc; width: 650px; height: 500px; display: inline-block;"></div>
     </div>
+
+    <div style="padding:15px;">
+      <h2>Linhas com Material Chart (não dá pra fazer linhas curvas)</h2>
+      <div id="linechart_material" style="border: 1px solid #ccc; display: inline-block;"></div>
+    </div>
+    <div style="padding:15px;">
+      <h2>Linhas curvas</h2>
+      <div id="curve_chart_2" style="border: 1px solid #ccc; width: 600px; height: 400px; display: inline-block;"></div>
+      <div id="curve_chart" style="border: 1px solid #ccc; width: 600px; height: 400px; display: inline-block;"></div>
+      <div id="linha_lancados_1" style="border: 1px solid #ccc; width: 400px; height: 200px; display: inline-block;"></div>
+      <div id="linha_assistidos_1" style="border: 1px solid #ccc; width: 400px; height: 200px; display: inline-block;"></div>
+      <div id="linha_lancados_2" style="border: 1px solid #ccc; width: 400px; height: 200px; display: inline-block;"></div>
+      <div id="linha_assistidos_2" style="border: 1px solid #ccc; width: 400px; height: 200px; display: inline-block;"></div>
+    </div>
+
+      <div id="linha_eixo_duplo" style="border: 1px solid #ccc; display: inline-block;"></div>
+    
 
   </body>
 

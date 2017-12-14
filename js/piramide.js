@@ -6,7 +6,7 @@ function desenharPiramide() {
         var data = google.visualization.arrayToDataTable([
 
 		        ['Idade', 'Homem', 'Mulher'],
-		       ['0-4 anos',   106, -104],
+		       	['0-4 anos',  106, -104],
 		        ['5-9 anos',   91,  -86 ],
 				['10-14 anos', 79,  -77 ],
 				['15-19 anos', 68,  -64 ],
@@ -28,10 +28,23 @@ function desenharPiramide() {
 				['95+ anos',   0,   0   ]
 		]);
 
+
+		var view = new google.visualization.DataView(data);
+	      view.setColumns([0, 1,
+	                       { calc: "stringify",
+	                         sourceColumn: 1,
+	                         type: "string",
+	                         role: "annotation" },
+	                       2,
+	                       { calc: "stringify",
+	                         sourceColumn: 2,
+	                         type: "string",
+	                         role: "annotation" }]);
+
 		var options = {
 				title: 'Pirâmide de população em determinada faixa etária',
                 isStacked: true,
-
+                bar: {groupWidth: "92%"},
                 hAxis: {
                     format: ';',
                 },
@@ -46,7 +59,7 @@ function desenharPiramide() {
 				formatter.format(data, 2);
 
 		var chart = new google.visualization.BarChart(document.getElementById('piramide_div'));
-      chart.draw(data, options);
+      chart.draw(view, options);
 	};
 
 
