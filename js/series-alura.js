@@ -5,7 +5,7 @@ google.charts.setOnLoadCallback(drawSeriesAlura);
 //bubble chart
     function drawSeriesAlura() {
       var data = google.visualization.arrayToDataTable([
-        ['Categoria',   'Cursos',    'Taixa de conclusão', 'Numero de alunos'],
+        ['Categoria',   'Cursos',    'taxa de conclusão', 'Numero de alunos'],
         ['Mobile',       80,              1.67,          34646463],
         ['Design',       65,              1.36,          81902307],
         ['Programação',  70,              1.84,           5523095],
@@ -15,10 +15,10 @@ google.charts.setOnLoadCallback(drawSeriesAlura);
         
       ]);
       var options = {
-        title: 'Correlação entre cursos, taixa de conclusão ' +
+        title: 'Correlação entre cursos, taxa de conclusão ' +
                '(2017)',
         hAxis: {title: 'Cursos', maxValue: 83},
-        vAxis: {title: 'Taixa de conclusão'},
+        vAxis: {title: 'taxa de conclusão'},
         bubble: {textStyle: {fontSize: 11}},
         colorAxis: {colors: ['yellow', 'red']}
       };
